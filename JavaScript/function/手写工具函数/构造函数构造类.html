@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>构造函数构造类</title>
+</head>
+<body>
+  <script>
+    // 构造函数构造类
+    /**
+     * 1、用于初始化新创建的对象（此时并没有创建并返回一个对象，仅仅是初始化一个对象）
+     * 2、可以为对象添加属性和方法
+     * 3、使用new关键字调用构造函数，创建并返回一个对象
+     * 4、构造函数中的this关键字指向新创建的对象
+     * 5、构造函数的返回值会被忽略，因为构造函数没有返回值，而是创建并返回一个对象
+     * 6、构造函数中以this.属性名 = 属性值的方式为对象添加属性，该属性不可继承,每个实例对象都拥有唯一的属性
+     * 7、定义构造函数既是定义类，并且类名首字母大写，实例对象首字母小写
+     */
+    function Range(start, end) { 
+      this.start = start;
+      this.end = end;
+    }
+    Range.prototype = {  // 新的对象的原型对象
+      includes: function(num) {
+        return this.start <= num && num <= this.end;
+      },
+      toString: function() {
+        return `${this.start} - ${this.end}`;
+      },
+      foreach: function(callback) {
+        for (let i = this.start; i <= this.end; i++) {
+          callback(i);
+        }
+      }
+    }
+    var r = new Range(3, 7); // 创建一个范围对象
+    r.includes(5); // true
+    r.foreach(console.log)
+    console.log('r:',r);
+    const r2 = new Range(1, 5); // 创建另一个范围对象
+    console.log('r2:',r2)
+  </script>
+</body>
+</html>

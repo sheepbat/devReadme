@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>面向对象设计示例</title>
+</head>
+<body>
+  <div id="app">
+    <h1>Hello World!</h1>
+    <p>This is a paragraph.</p>    
+  </div>
+  <script src="index.js"></script>
+  <script>
+    const circle1 = new Circle(5);
+   
+    console.log('构造函数：', circle1._radius);
+
+    console.log('半径为5的圆的面积为：', circle1, '半径为5的圆的周长为：', circle1.area());
+    circle1.radius = 15;
+    console.log('半径为15的圆的面积为：', circle1, '半径为5的圆的周长为：', circle1.area());
+    const circle2 = new Circle(10);
+    console.log('半径为10的圆的面积为：', circle2, '半径为5的圆的周长为：', circle2.area());
+    console.log('圆的数量：', circle1._count, '圆的总面积：', Circle.circlesMade);
+  </script>
+</body>
+</html>

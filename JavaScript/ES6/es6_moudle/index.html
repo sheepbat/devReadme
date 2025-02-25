@@ -12,9 +12,16 @@
             基础页面
         </div>
         <script type="module">
-            import myData from "./js/export_test.js"
-            import { myAge,myFav} from "./js/export_test.js"
-            console.log(myData,'我的年龄=>', myAge,myFav)
+            import myData from "./js/export_1.js" // 导入default导出的内容
+            import {  myAge,myFav,dog,cat,Person} from "./js/export_1.js"
+            import { myAge as age} from "./js/export_1.js"
+            console.log('cat:', cat);
+            console.log('dog:', dog);
+            console.log('myAge:', myAge);
+            console.log('myFav:', myFav);
+            console.log('Person:', Person);
+            console.log('myData:', myData);
+            console.log('age:', age);
         </script>
     </body>
 </html>
