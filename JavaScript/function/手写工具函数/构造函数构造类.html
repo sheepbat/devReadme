@@ -20,8 +20,12 @@
     function Range(start, end) { 
       this.start = start;
       this.end = end;
+      this.getRange = function() {  // 每个实例都有该方法
+        return this.end - this.start + 1;
+      }
     }
-    Range.prototype = {  // 新的对象的原型对象
+    Range.prototype = {  // 新的对象的原型对象(所有实例共享该原型对象)
+      count: 0,
       includes: function(num) {
         return this.start <= num && num <= this.end;
       },
@@ -34,12 +38,21 @@
         }
       }
     }
+    /**
+     * 创建Range的实例的操作步骤
+     * 1、在内存中创建一个新对象
+     * 2、将新对象的[[prototype]]特性被赋值为构造函数的prototype属性
+     * 3、构造函数内部的this被赋值为这个新对象（即this指向这个新对象）
+     * 4、执行构造函数内部的代码（给新对象添加属性和方法）
+     * 5、如果构造函数返回非空对象，则返回该对象，否则返回刚创建的新对象
+     * 
+     */
     var r = new Range(3, 7); // 创建一个范围对象
     r.includes(5); // true
     r.foreach(console.log)
     console.log('r:',r);
     const r2 = new Range(1, 5); // 创建另一个范围对象
-    console.log('r2:',r2)
+    console.log('r2:',r2, r2.__proto__ === Range.prototype) // true
   </script>
 </body>
 </html>

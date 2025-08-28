@@ -2,6 +2,17 @@ class Circle {
   constructor(radius) {
     this.radius = radius;
     Circle.circlesMade++;  // Class
+    Circle.sort = true;  // Class
+    Circle.init()
+  }
+  static init() {
+    console.log('Circle init', Circle.sort);
+  }
+  static set sort(val) {
+   this._sort = val;
+  }
+  static get sort() {
+    return this._sort;
   }
   static draw(circle, canvas) {
     console.log('Drawing circle====', circle);

@@ -30,8 +30,14 @@
             return new f(); //使用f()创建p的继承对象
         }
 
+        // function range(start, end) {
+        //     var r = inherit(range.methods);
+        //     r.start = start;
+        //     r.end = end;
+        //     return r;
+        // }
         function range(start, end) {
-            var r = inherit(range.methods);
+            var r = new Object();
             r.start = start;
             r.end = end;
             return r;

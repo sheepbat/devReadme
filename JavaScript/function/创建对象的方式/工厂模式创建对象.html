@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>工厂模式创建对象</title>
+</head>
+<body>
+  <script>
+
+    // 工厂模式创建对象
+    function createPerson(name, age) {
+      var o = new Object();
+      o.name = name;
+      o.age = age;
+      o.sayName = function() {
+        console.log(this.name);
+      }
+      return o;
+    }
+
+    // 创建对象
+    var person11 = createPerson('张三', 20);
+    var person12 = createPerson('李四', 25)
+    console.log('----------------工厂模式创建对象--------------------');
+    console.log('person11',person11, person11.name, person11.age);
+    console.log('person12',person12, person12.name, person12.age);
+
+    /*************** 构造函数模式创建对象  *****************/
+    /** 要创建Person的新实例,必须使用new操作符。以这种方式调用构造函数实际上会经历以下4个步骤:
+     * (1)创建一个新对象;
+     * (2)将构造函数的作用域赋给新对象(因此this就指向了这个新对象);
+     * (3)执行构造函数中的代码(为这个新对象添加属性);
+     * (4)返回新对象。
+     */
+    function Person(name, age) {
+      this.name = name;
+      this.age = age;
+      this.sayName = function() {
+        console.log(this.name);
+      }
+    }
+    // 创建对象
+    var person21 = new  Person('李四', 25)
+    var person22 = new Person('王五', 30);
+    console.log('----------------构造函数模式创建对象------------------');
+    console.log('person21',person21, person21.name, person21.age);
+    console.log('person22',person22, person22.name, person22.age);
+    // 使用工厂函数实现模拟构构造函数new的过程
+    function createObject(name,age) {
+      // (1) 创建一个新对象
+      const newObj = {};
+      
+      // (2) 将构造函数的作用域赋给新对象
+      newObj.__proto__ = Person.prototype;
+      // newObj.prototype = Person.prototype;
+      
+      // (3) 执行构造函数中的代码
+      const result = Person.call(newObj, name, age);
+      
+      // (4) 返回新对象
+      return result instanceof Object ? result : newObj;
+    }
+    console.log('3333', createObject('李四', 40));
+     /*************** 3、原型模式创建对象  *****************/
+     /**
+      * 原型模式创建对象，是指通过原型链来实现对象的创建。
+      * 1、所有实例对象都指向同一个原型对象，这个原型对象包含了所有实例共享的属性和方法。
+      * 2、每个实例对象可以向原型对象添加属性和方法，从而实现了属性和方法的共享。
+      */
+     function Person3() {}
+     Person3.prototype = {
+      name: '张三',
+      age: 20,
+      sayName: function() {
+        console.log(this.name);
+      }
+    }
+     // 创建对象
+     var person31 = new Person3();
+     var person32 = new Person3();
+     person32.name = '李四'
+     console.log('----------------原型模式创建对象-');
+     console.log('person31',person31, person31.name, person31.age);
+     console.log('person32',person32, person32.name, person32.age);
+
+     /***********4、组合使用构造函数模式和原型模式****************/
+     function Person4(name, age) {
+      this.name = name;
+      this.age = age;
+      this.fav = ['reading', 'running']
+    }
+    Person4.prototype = {
+      constructor: Person4,
+      sayName: function() {
+        console.log(this.name);
+      },
+      sayFav: function() {
+        console.log(this.fav.join(','));
+      }
+    }
+    // 创建对象
+    console.log('----------------组合使用构造函数模式和原型模式-------------------');
+    var person41 = new Person4('李四', 25)
+    var person42 = new Person4('张三', 30)
+    person41.fav = ['swimming', 'hiking'];
+    console.log('person41',person41, person41.name, person41.age, person41.fav);
+    console.log('person42',person42, person42.name, person42.age, person42.fav);
+    person41.sayFav();
+    person42.sayFav();
+    /***********5、寄生构造函数模式****************/
+    /**
+     *   寄生构造函数模式，是指创建一个函数，该函数的作用是封装创建对象的代码，然后返回新创建的对象。
+     *   关于寄生构造函数模式,有一点需要说明:首先,返回的对象与构造函数或者与构造函数的原型属
+     * 性之间没有关系;也就是说,构造函数返回的对象与在构造函数外部创建的对象没有什么不同。为此
+     *不能依赖instanceof操作符来确定对象类型。由于存在上述问题,我们建议在可以使用其他模式的情况下,不要使用这种模式。
+     */
+    function Person5(name, age) {
+      var o = new Object();
+      o.name = name;
+      o.age = age;
+      o.sayName = function() {
+        console.log(this.name);
+      }
+      return o;
+    }
+    function SpecialArray(){
+      //创建数组
+      var values = new Array();
+      //添加值
+      values.push.apply(values, arguments);
+      //添加方法
+      values.toPipedString = function(){
+        return this.join("|");
+      };
+      //返回数组
+      return values;
+    }
+    console.log('----------------寄生构造函数模式-------------------');
+    var colors = new SpecialArray("red", "blue","green");
+    console.log(colors.toPipedString());// red| blue| green 
+
+  </script>
+</body>
+</html>
